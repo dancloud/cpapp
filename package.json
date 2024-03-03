@@ -8,11 +8,17 @@
   "dependencies": {
     "@sap/cds": "^7",
     "@sap/generator-fiori": "^1.12.5",
-    "express": "^4"
+    "express": "^4",
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
     "@sap/ux-specification": "^1.120.5"
+  },
+  "engines": {
+    "node": "^18"
   },
   "scripts": {
     "start": "cds-serve",
@@ -27,22 +33,26 @@
         "auth": {
           "kind": "mocked",
           "users": {
-              "risk.viewer@tester.sap.com": {
-                  "password": "initial",
-                  "ID": "risk.viewer@tester.sap.com",
-                  "roles": [
-                    "RiskViewer"
-                  ]
-              },
-              "risk.manager@tester.sap.com": {
-                  "password": "initial",
-                  "ID": "risk.manager@tester.sap.com",
-                  "roles": [
-                    "RiskManager"
-                  ]
-              }
+            "risk.viewer@tester.sap.com": {
+              "password": "initial",
+              "ID": "risk.viewer@tester.sap.com",
+              "roles": [
+                "RiskViewer"
+              ]
+            },
+            "risk.manager@tester.sap.com": {
+              "password": "initial",
+              "ID": "risk.manager@tester.sap.com",
+              "roles": [
+                "RiskManager"
+              ]
+            }
           }
         }
+      },
+      "[production]": {
+        "db": "hana",
+        "auth": "xsuaa"
       }
     }
   }
