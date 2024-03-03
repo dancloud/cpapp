@@ -7,10 +7,11 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
-    "@sap/generator-fiori": "^1.12.5",
-    "express": "^4",
     "@sap/cds-hana": "^2",
-    "@sap/xssec": "^3"
+    "@sap/generator-fiori": "^1.12.5",
+    "@sap/xssec": "^3",
+    "express": "^4",
+    "rimraf": "^5.0.5"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
