@@ -1,60 +1,70 @@
 {
-  "name": "cpapp",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap/cds": "^7",
-    "@sap/cds-hana": "^2",
-    "@sap/generator-fiori": "^1.12.5",
-    "@sap/xssec": "^3",
-    "express": "^4",
-    "rimraf": "^5.0.5"
-  },
-  "devDependencies": {
-    "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^7",
-    "@sap/ux-specification": "^1.120.5"
-  },
-  "engines": {
-    "node": "^18"
-  },
-  "scripts": {
-    "start": "cds-serve",
-    "watch-risks": "cds watch --open risks/webapp/index.html?sap-ui-xx-viewCache=false"
-  },
-  "sapux": [
-    "app/risks"
-  ],
-  "cds": {
-    "requires": {
-      "[development]": {
-        "auth": {
-          "kind": "mocked",
-          "users": {
-            "risk.viewer@tester.sap.com": {
-              "password": "initial",
-              "ID": "risk.viewer@tester.sap.com",
-              "roles": [
-                "RiskViewer"
-              ]
+    "name": "cpapp",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/cds": "^7",
+        "@sap/cds-hana": "^2",
+        "@sap/generator-fiori": "^1.12.5",
+        "@sap/xssec": "^3",
+        "express": "^4",
+        "rimraf": "^5.0.5"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^1",
+        "@sap/cds-dk": "^7",
+        "@sap/ux-specification": "^1.120.5",
+        "@wdio/cli": "^8.32.4",
+        "@wdio/local-runner": "^8.32.4",
+        "@wdio/mocha-framework": "^8.32.4",
+        "@wdio/spec-reporter": "^8.32.4",
+        "wdio-ui5-service": "^2.0.6",
+        "rimraf": "^3.0.2"
+    },
+    "engines": {
+        "node": "^18"
+    },
+    "scripts": {
+        "start": "cds-serve",
+        "watch-risks": "cds watch --open risks/webapp/index.html?sap-ui-xx-viewCache=false",
+        "wdi5": "wdio run ./webapp/test/e2e/wdio.conf.js",
+        "undeploy": "cf undeploy cpapp --delete-services --delete-service-keys --delete-service-brokers",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
+    },
+    "sapux": [
+        "app/risks"
+    ],
+    "cds": {
+        "requires": {
+            "[development]": {
+                "auth": {
+                    "kind": "mocked",
+                    "users": {
+                        "risk.viewer@tester.sap.com": {
+                            "password": "initial",
+                            "ID": "risk.viewer@tester.sap.com",
+                            "roles": [
+                                "RiskViewer"
+                            ]
+                        },
+                        "risk.manager@tester.sap.com": {
+                            "password": "initial",
+                            "ID": "risk.manager@tester.sap.com",
+                            "roles": [
+                                "RiskManager"
+                            ]
+                        }
+                    }
+                }
             },
-            "risk.manager@tester.sap.com": {
-              "password": "initial",
-              "ID": "risk.manager@tester.sap.com",
-              "roles": [
-                "RiskManager"
-              ]
+            "[production]": {
+                "db": "hana",
+                "auth": "xsuaa"
             }
-          }
         }
-      },
-      "[production]": {
-        "db": "hana",
-        "auth": "xsuaa"
-      }
     }
-  }
 }
